@@ -4,38 +4,33 @@
 <head>
     <!-- Google / Search Engine Tags -->
     <meta itemprop="name" content="iEfrei">
-    <meta itemprop="description" content="iEfrei est un site Internet permettant aux étudiants d'uploader leurs prises de notes et de se les partager. Thomas Peugnet.">
-    <meta itemprop="image" content="https://iefrei.fr/public/images/logo_efrei-rounded.png">
+    <meta itemprop="description" content="The DJ has heard you.">
+    <meta itemprop="image" content="https://dj.iefrei.fr/assets/images/favicon.png">
 
     <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="https://iefrei.fr">
+    <meta property="og:url" content="https://dj.iefrei.fr">
     <meta property="og:type" content="website">
     <meta property="og:title" content="iEfrei">
-    <meta property="og:description" content="iEfrei est un site Internet permettant aux étudiants d'uploader leurs prises de notes et de se les partager. Thomas Peugnet.">
-    <meta property="og:image" content="https://iefrei.fr/public/images/logo_efrei-rounded.png">
+    <meta property="og:description" content="The DJ has heard you.">
+    <meta property="og:image" content="https://dj.iefrei.fr/assets/images/favicon.png">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="iEfrei">
-    <meta name="twitter:description" content="iEfrei est un site Internet permettant aux étudiants d'uploader leurs prises de notes et de se les partager. Thomas Peugnet.">
-    <meta name="twitter:image" content="https://iefrei.fr/public/images/logo_efrei-rounded.png">
+    <meta name="twitter:description" content="The DJ has heard you.">
+    <meta name="twitter:image" content="https://dj.iefrei.fr/assets/images/favicon.png">
 
     <meta charset="utf-8" />
-    <meta name="description" content="iEfrei est un site Internet permettant aux étudiants d'uploader leurs prises de notes et de se les partager. Thomas Peugnet." />
-    <meta name="keywords" content="iefrei,efrei,epita,paris,cours,lessons,leçons,nots,notes de cours">
+    <meta name="description" content="The DJ has heard you." />
     <meta name="robots" content="all" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
     <title>iEfrei.fr - DJ Listener</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="icon" href="favicon.png" />
-    <script src="index.js"></script>
-
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="icon" href="assets/images/favicon.png" />
+    <script src="js/index.js"></script>
 </head>
 
 <body>
-    <!-- Do an input interface to put a link -->
     <div class="container">
         <img src="bg_3.png" alt="background" width="90%" class="bg">
         <div class="title">
