@@ -51,6 +51,7 @@
 function display()
 {
     $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    printf("IP : " . $ip);
     if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE))
     {
         echo "<div class='error'>You need to be connected to the WIFI.</div>";

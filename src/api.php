@@ -1,31 +1,52 @@
 <?php
-
-// check endpoint
-// dl music by execute command
-// rsync music from client (windows) every 1 min
-$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-printf("IP : " . $ip);
-if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE))
+// display errors
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+if (isset($_GET["dl_track"]) && $_GET["dl_track"] == "true")
 {
-    if (isset($_GET["dl_track"]) && $_GET["dl_track"] == "true")
-    {
-        $data = json_decode(file_get_contents('php://input'), true);
+    $data = json_decode(file_get_contents('php://input'), true);
 
-        $link = $data["url"];
-        // check this is a valid youtube.com url
-        if (strpos($link, "youtube.com") == false)
-        {
-            echo "Invalid url";
-            return;
-        }
-        // exec the command to download the music
-        //shell_exec("youtube-dl -o '/home/thomas/temp_dj/%(title)s.%(ext)s' -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ".$link);
-        $your_command = "youtube-dl -o '/home/thomas/temp_dj/%(title)s.%(ext)s' -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 '" . $link . "'";
-        printf($your_command);
-        exec($your_command, $output, $return_var);
-        var_dump($output);
-        var_dump($return_var);
-        printf("OK");
-        // exec command to move it inside the temporary rep
+    $link = $data["url"];
+    // check this is a valid youtube.com url
+    if (strpos($link, "youtube.com") == false)
+    {
+        echo "Invalid url";
+        return;
     }
+
+    // Check if the music exists 
+
+    if (yt_exists($link))
+    {
+
+        $command = "youtube-dl -o \"music/%(title)s.%(ext)s\" -v -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 \"" . $link . "\" > /dev/null 2>&1 &";
+        $output = null;
+        $retval = null;
+        // run command in background
+        exec($command, $output, $retval);
+
+        $response = array(
+            'status' => "success", 'message' => "DJ is now downloading the track..."
+        );
+    }
+    else
+    {
+        $response = array(
+            'status' => "failure", 'message' => "Video not found"
+        );
+    }
+
+    $json_repsonse = json_encode($response);
+
+    echo $json_repsonse;
+}
+
+
+function yt_exists($url)
+{
+    $theURL = "https://www.youtube.com/oembed?url=" . $url . "&format=json";
+    $headers = get_headers($theURL);
+
+    return (substr($headers[0], 9, 3) !== "404");
 }
