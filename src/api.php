@@ -9,17 +9,16 @@ if (isset($_GET["dl_track"]) && $_GET["dl_track"] == "true")
 
     $link = $data["url"];
     // check this is a valid youtube.com url
-    if (strpos($link, "youtube.com") == false)
-    {
-        echo "Invalid url";
-        return;
-    }
+    // if (strpos($link, "https://www.youtube.com") == false)
+    // {
+    //     echo "Invalid url";
+    //     return;
+    // }
 
     // Check if the music exists 
 
     if (yt_exists($link))
     {
-
         $command = "youtube-dl -o \"music/%(title)s.%(ext)s\" -v -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 \"" . $link . "\" > /dev/null 2>&1 &";
         $output = null;
         $retval = null;

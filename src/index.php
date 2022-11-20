@@ -33,10 +33,11 @@
 
 <body>
     <div class="container">
-        <img src="assets/images/bg_3.png" alt="background" width="90%" class="bg">
+        <img src="assets/images/bg_3.png" alt="background" class="bg">
         <div class="title">
             <h1>iEfrei.fr</h1>
             <h2>DJ Listener</h2>
+            <div class="message" id="message"></div>
         </div>
         <div class="input">
             <?php
