@@ -28,11 +28,12 @@
     <link rel="stylesheet" href="styles/index.css">
     <link rel="icon" href="assets/images/favicon.png" />
     <script src="js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <img src="bg_3.png" alt="background" width="90%" class="bg">
+        <img src="assets/images/bg_3.png" alt="background" width="90%" class="bg">
         <div class="title">
             <h1>iEfrei.fr</h1>
             <h2>DJ Listener</h2>
