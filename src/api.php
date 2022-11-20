@@ -26,7 +26,7 @@ if (isset($_GET["dl_track"]) && $_GET["dl_track"] == "true")
         exec($command, $output, $retval);
 
         $response = array(
-            'status' => "success", 'message' => "DJ is now downloading the track..."
+            'status' => "success", 'message' => "DJ is now downloading your track..."
         );
     }
     else

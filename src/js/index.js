@@ -7,6 +7,7 @@ function processing_link() {
     if (url.match(/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/gm)) {
     } else {
         message.innerHTML = "Invalid URL : Try again";
+        message.style.backgroundColor = "#f44336";
         return;
     }
 
