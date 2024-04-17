@@ -102,7 +102,7 @@ def download_track():
         # print(process.stdout)
 
         return jsonify({'status': 'failure', 'message': "An error occurred while downloading the track. Maybe the"
-                                                        " URL is invalid or the track is not available."})
+                                                        " URL is invalid or the track is not available for download."})
 
 
 def yt_exists(url):
