@@ -17,6 +17,7 @@ def convert_short_youtube_url_to_full(url):
     Returns:
     str: The full YouTube URL (e.g., https://www.youtube.com/watch?v=ozthKn07Ei4).
     """
+
     # Check if the URL is a valid shortened YouTube URL
     match = re.match(r'https?:\/\/(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]+)', url)
     if not match:
@@ -37,20 +38,29 @@ def download_track():
     url = request.json['url']
     output_template = 'downloads/%(title)s.%(ext)s'
 
-    # Check if the URL is valid     pattern = r'^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+'
+    # Check if the URL is valid
     pattern = r'^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+'
     if not re.match(pattern, url):
         return jsonify({'status': 'failure', 'message': 'The URL is invalid !'})
 
     # Remove the &list=... part of the URL
     if "&list=" in url:
-        url = convert_short_youtube_url_to_full(url.split('&list=')[0])
+        try:
+            url = convert_short_youtube_url_to_full(url.split('&list=')[0])
+        except ValueError:
+            return jsonify({'status': 'failure', 'message': 'This URL format is not currently supported. Try with a '
+                                                            'format like the following one: '
+                                                            'https://youtu.be/TGMJRnUbwwo'})
 
     if "?list=" in url:
-        url = convert_short_youtube_url_to_full(url.split('?list=')[0])
+        try:
+            url = convert_short_youtube_url_to_full(url.split('?list=')[0])
+        except ValueError:
+            return jsonify({'status': 'failure', 'message': 'This URL format is not currently supported. Try with a '
+                                                            'format like the following one: '
+                                                            'https://youtu.be/TGMJRnUbwwo'})
 
-    print(url)
-
+    # Create the command to download the track
     command = [
         '/usr/local/bin/yt_dlp',
         '--extract-audio',
@@ -60,6 +70,7 @@ def download_track():
         url
     ]
 
+    # Download the track
     try:
         process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
@@ -85,10 +96,13 @@ def download_track():
 
         if "[ExtractAudio] Destination:" in process.stderr:
             return jsonify({'status': 'success', 'message': 'Your track has been downloaded successfully !'})
-        print(e)
-        print(process.stderr)
-        print(process.stdout)
-        return jsonify({'status': 'failure', 'message': "An error occurred while downloading the track."})
+
+        # print(e)
+        # print(process.stderr)
+        # print(process.stdout)
+
+        return jsonify({'status': 'failure', 'message': "An error occurred while downloading the track. Maybe the"
+                                                        " URL is invalid or the track is not available."})
 
 
 def yt_exists(url):
