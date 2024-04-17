@@ -7,6 +7,27 @@ import subprocess
 app = Flask(__name__)
 
 
+def convert_short_youtube_url_to_full(url):
+    """
+    Converts a shortened YouTube URL to a full YouTube URL.
+
+    Args:
+    url (str): The shortened YouTube URL (e.g., https://youtu.be/ozthKn07Ei4).
+
+    Returns:
+    str: The full YouTube URL (e.g., https://www.youtube.com/watch?v=ozthKn07Ei4).
+    """
+
+    # Check if the URL is a valid shortened YouTube URL
+    match = re.match(r'https?://youtu\.be/([a-zA-Z0-9_-]+)', url)
+    if not match:
+        raise ValueError("Invalid YouTube URL provided.")
+
+    video_id = match.group(1)
+    full_url = f'https://www.youtube.com/watch?v={video_id}'
+    return full_url
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -24,10 +45,10 @@ def download_track():
 
     # Remove the &list=... part of the URL
     if "&list=" in url:
-        url = url.split('&list=')[0]
+        url = convert_short_youtube_url_to_full(url.split('&list=')[0])
 
     if "?list=" in url:
-        url = url.split('?list=')[0]
+        url = convert_short_youtube_url_to_full(url.split('?list=')[0])
 
     print(url)
 
