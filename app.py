@@ -17,13 +17,12 @@ def convert_short_youtube_url_to_full(url):
     Returns:
     str: The full YouTube URL (e.g., https://www.youtube.com/watch?v=ozthKn07Ei4).
     """
-
     # Check if the URL is a valid shortened YouTube URL
-    match = re.match(r'(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?/([a-zA-Z0-9_-]+)', url)
+    match = re.match(r'https?:\/\/(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]+)', url)
     if not match:
         raise ValueError("Invalid YouTube URL provided.")
 
-    video_id = match.group(7)
+    video_id = match.group(1)
     full_url = f'https://www.youtube.com/watch?v={video_id}'
     return full_url
 
@@ -85,6 +84,8 @@ def download_track():
 
     except Exception as e:
         print(e)
+        print(process.stderr)
+        print(process.stdout)
         return jsonify({'status': 'failure', 'message': "An error occurred while downloading the track."})
 
 
