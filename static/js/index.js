@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const button = document.getElementById('launcher');
     button.addEventListener('click', function() {
+        button.innerHTML = "Adding...This may take a while";
+        button.disabled = true;
         processing_link();
     });
 });
@@ -11,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function processing_link() {
     const url = document.getElementById('url').value;
     const message = document.getElementById('message');
+    const button = document.getElementById('launcher');
     
     if (!isValidYouTubeUrl(url)) {
         message.innerHTML = "Invalid URL : Try again";
@@ -30,6 +33,8 @@ function processing_link() {
         error: function(xhr, status, error) {
             message.innerHTML = `Error: ${error}`;
             message.style.backgroundColor = "#f44336";
+            button.innerHTML = "Try again";
+            button.disabled = false;
         }
     });
 }
@@ -54,13 +59,12 @@ function handleResponse(data) {
     if (data.status === 'success') {
         message.style.backgroundColor = "#4CAF50";
         message.innerHTML = data.message;
-        button.innerHTML = "Sent to the DJ !";
-        setTimeout(() => {
-            message.innerHTML = "Your video has been added to queue !";
-        }, 60000);
+        button.innerHTML = "Add another track !";
+        button.disabled = false;
     } else {
         message.style.backgroundColor = "#f44336";
         message.innerHTML = "Error: " + data.message;
         button.innerHTML = "Try again";
+        button.disabled = false;
     }
 }

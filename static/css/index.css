@@ -32,7 +32,7 @@ img {
     bottom: 0;
     margin: auto;
     opacity: 0.75;
-    animation: spin 10s infinite linear;
+    animation: spin 4s infinite linear;
     width: 20%;
 }
 

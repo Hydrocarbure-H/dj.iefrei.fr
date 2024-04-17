@@ -15,28 +15,36 @@ def download_track():
     url = request.json['url']
     output_template = 'downloads/%(title)s.%(ext)s'
 
-    # Construction de la commande pour télécharger le meilleur format audio en mp3
     command = [
         '/usr/local/bin/yt_dlp',
         '--extract-audio',
         '--audio-format', 'mp3',
-        '--audio-quality', '0',  # Qualité la plus élevée
+        '--audio-quality', '0',
         '-o', output_template,
         url
     ]
 
     try:
-        # Exécution de la commande yt-dlp
         process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-        # Vérifier si la commande a réussi
+        # Wait for the process to finish
+        process.check_returncode()
+
         if process.returncode == 0:
-            return jsonify({'status': 'success', 'message': 'Download started'})
+            return jsonify({'status': 'success', 'message': 'Your track has been downloaded successfully !'})
         else:
-            return jsonify({'status': 'failure', 'message': 'Download failed', 'details': process.stderr})
+            # Check if the song has already been downloaded
+            if 'already' in process.stderr:
+                return jsonify({'status': 'failure', 'message': 'This track has already been downloaded !'})
+
+            print(process.stderr)
+            return jsonify({'status': 'failure', 'message': 'Download failed. This software still'
+                                                            ' in beta version, sorry ! You can try again '
+                                                            'with another track.'})
 
     except Exception as e:
-        return jsonify({'status': 'failure', 'message': str(e)})
+        print(e)
+        return jsonify({'status': 'failure', 'message': "An error occurred while downloading the track."})
 
 
 def yt_exists(url):
