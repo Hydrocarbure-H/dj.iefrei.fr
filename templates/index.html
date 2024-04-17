@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iEfrei.fr - DJ Listener</title>
+    <meta name="description" content="The DJ has heard you." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/bg_3.png') }}" alt="background" class="bg">
+        <div class="title">
+            <h1>iEfrei.fr</h1>
+            <h2>DJ Listener</h2>
+            <div class="message" id="message"></div>
+        </div>
+        <div class="input">
+            <input type="text" id="url" placeholder="Enter any Youtube Url...">
+            <a class="btn" id="launcher" onclick="processing_link()">Send to the DJ</a>
+        </div>
+    </div>
+</body>
+</html>

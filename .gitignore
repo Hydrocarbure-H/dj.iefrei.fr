@@ -1,2 +1,4 @@
 src/music/*
 *.mp3
+.idea/
+*.pyc
