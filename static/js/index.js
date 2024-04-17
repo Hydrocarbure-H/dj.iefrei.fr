@@ -61,7 +61,15 @@ function handleResponse(data) {
         message.innerHTML = data.message;
         button.innerHTML = "Add another track !";
         button.disabled = false;
-    } else {
+    }
+    else if (data.status === 'warning') {
+        message.style.backgroundColor = "#ff9800";
+        message.innerHTML = "Warning: " + data.message;
+        button.innerHTML = "Add another track !";
+        button.disabled = false;
+
+    }
+    else {
         message.style.backgroundColor = "#f44336";
         message.innerHTML = "Error: " + data.message;
         button.innerHTML = "Try again";

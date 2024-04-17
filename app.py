@@ -43,7 +43,7 @@ def download_track():
         if process.returncode == 0:
             # Check if the song has already been downloaded
             if 'already' in process.stderr or 'already' in process.stdout:
-                return jsonify({'status': 'failure', 'message': 'This track has already been downloaded !'})
+                return jsonify({'status': 'warning', 'message': 'This track has already been downloaded !'})
 
             return jsonify({'status': 'success', 'message': 'Your track has been downloaded successfully !'})
         else:
