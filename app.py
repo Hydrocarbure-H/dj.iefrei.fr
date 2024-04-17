@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, request, jsonify, render_template
 import requests
 import subprocess
@@ -15,6 +17,10 @@ def download_track():
     url = request.json['url']
     output_template = 'downloads/%(title)s.%(ext)s'
 
+    # Check if the URL is valid
+    if not re.match(r'^https?:\/\/(www\.)?youtube\.(com|be)', url):
+        return jsonify({'status': 'failure', 'message': 'The URL is invalid !'})
+
     command = [
         '/usr/local/bin/yt_dlp',
         '--extract-audio',
@@ -31,6 +37,10 @@ def download_track():
         process.check_returncode()
 
         if process.returncode == 0:
+            # Check if the song has already been downloaded
+            if 'already' in process.stderr or 'already' in process.stdout:
+                return jsonify({'status': 'failure', 'message': 'This track has already been downloaded !'})
+
             return jsonify({'status': 'success', 'message': 'Your track has been downloaded successfully !'})
         else:
             # Check if the song has already been downloaded
