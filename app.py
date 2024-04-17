@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 import requests
 import subprocess
-import youtube_dl
 
 app = Flask(__name__)
 
