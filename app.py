@@ -23,7 +23,12 @@ def download_track():
         return jsonify({'status': 'failure', 'message': 'The URL is invalid !'})
 
     # Remove the &list=... part of the URL
-    url = url.split('&')[0]
+    if "list" in url:
+        url = url.split('&list=')
+        if len(url) == 0:
+            url = url.split('?list=')
+            
+        url = url[0]
 
     command = [
         '/usr/local/bin/yt_dlp',
