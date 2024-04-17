@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import requests
 import subprocess
+import youtube_dl
 
 app = Flask(__name__)
 
@@ -12,19 +13,31 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def download_track():
-    data = request.json
-    url = data['url']
+    url = request.json['url']
+    output_template = 'downloads/%(title)s.%(ext)s'
 
-    # if yt_exists(url):
-    #     command = f"youtube-dl -o 'music/%(title)s.%(ext)s' -v -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 '{url}' > /dev/null 2>&1 &"
-    #     subprocess.Popen(command, shell=True)
-    #     response = {'status': 'success', 'message': 'DJ is now downloading your track...'}
-    # else:
-    #     response = {'status': 'failure', 'message': 'Video not found'}
+    # Construction de la commande pour télécharger le meilleur format audio en mp3
+    command = [
+        '/usr/local/bin/yt_dlp',
+        '--extract-audio',
+        '--audio-format', 'mp3',
+        '--audio-quality', '0',  # Qualité la plus élevée
+        '-o', output_template,
+        url
+    ]
 
-    response = {'status': 'success', 'message': 'DJ is now downloading your track...'}
+    try:
+        # Exécution de la commande yt-dlp
+        process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-    return jsonify(response)
+        # Vérifier si la commande a réussi
+        if process.returncode == 0:
+            return jsonify({'status': 'success', 'message': 'Download started'})
+        else:
+            return jsonify({'status': 'failure', 'message': 'Download failed', 'details': process.stderr})
+
+    except Exception as e:
+        return jsonify({'status': 'failure', 'message': str(e)})
 
 
 def yt_exists(url):
