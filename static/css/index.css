@@ -1,0 +1,192 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #fff;
+    font-family: "Saira", sans-serif;
+    overflow-y: hidden;
+}
+
+.container {
+    display: block;
+    height: 100vh;
+    background-color: #000;
+
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    opacity: 0.75;
+    animation: spin 4s infinite linear;
+    width: 20%;
+}
+
+.title {
+    padding-top: 40px;
+    height: 55vh;
+    text-align: center;
+}
+
+.error {
+    background-color: #fff3;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 20px;
+    text-align: center;
+    color: #c80505
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 35vh;
+    color: #000;
+}
+
+
+input[type="text"] {
+    font-family: "Audiowide_local", sans-serif;
+    color: #fff;
+    width: 30%;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #fff2;
+    padding: 10px;
+    border: none;
+    /* border: 2px solid white; */
+    transition: .3s;
+}
+
+input[type="text"]:focus {
+    width: 40%;
+}
+
+::placeholder {
+    font-family: "Audiowide_local", sans-serif;
+    text-align: center;
+    color: #fff;
+    opacity: .8;
+}
+
+.btn {
+    text-align: center;
+    font-family: "Audiowide_local", sans-serif;
+    margin-top: 10px;
+    width: 30%;
+    font-size: 20px;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #01a5a7;
+    padding: 10px;
+    border: none;
+    transition: .3s;
+    max-width: 250px;
+    /* box-shadow: rgba(255, 255, 255, 0.677) 1.95px 1.95px 2.6px; */
+}
+
+.message {
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 10px;
+    width: 30%;
+}
+
+.btn:hover {
+    background-color: #ffffff;
+    color: #000;
+    cursor: pointer;
+}
+
+.btn:visited,
+.btn:active,
+.btn:focus {
+    background-color: #ffffff;
+    color: #000;
+    max-width: 350px;
+    width: 50%;
+}
+
+@media screen and (max-width : 585px) {
+    img {
+        width: 60%;
+    }
+
+
+    .input {
+        height: 45vh;
+    }
+
+    input[type="text"] {
+        width: 80%;
+    }
+
+    input[type="text"]:focus {
+        width: 90%;
+    }
+
+    .btn {
+        width: 50%;
+    }
+
+    .message {
+        width: 80%;
+    }
+
+    .btn:visited,
+    .btn:active,
+    .btn:focus {
+
+        width: 60%;
+    }
+}
+
+@media screen and (max-width : 385px) {
+    img {
+        width: 30%;
+    }
+
+
+    .input {
+        height: 20vh;
+    }
+
+    input[type="text"] {
+        width: 80%;
+    }
+
+    input[type="text"]:focus {
+        width: 90%;
+    }
+
+    .btn {
+        width: 50%;
+    }
+
+    .message {
+        width: 80%;
+    }
+
+    .btn:visited,
+    .btn:active,
+    .btn:focus {
+
+        width: 60%;
+    }
+}
