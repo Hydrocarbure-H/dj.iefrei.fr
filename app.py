@@ -77,12 +77,14 @@ def download_track():
             if 'already' in process.stderr:
                 return jsonify({'status': 'failure', 'message': 'This track has already been downloaded !'})
 
-            print(process.stderr)
             return jsonify({'status': 'failure', 'message': 'Download failed. This software still'
                                                             ' in beta version, sorry ! You can try again '
                                                             'with another track.'})
 
     except Exception as e:
+
+        if "[ExtractAudio] Destination:" in process.stderr:
+            return jsonify({'status': 'success', 'message': 'Your track has been downloaded successfully !'})
         print(e)
         print(process.stderr)
         print(process.stdout)
