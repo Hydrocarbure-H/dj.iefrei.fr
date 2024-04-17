@@ -17,9 +17,13 @@ def download_track():
     url = request.json['url']
     output_template = 'downloads/%(title)s.%(ext)s'
 
-    # Check if the URL is valid
-    if not re.match(r'^https?:\/\/(www\.)?youtube\.(com|be)', url):
+    # Check if the URL is valid     pattern = r'^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+'
+    pattern = r'^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+'
+    if not re.match(pattern, url):
         return jsonify({'status': 'failure', 'message': 'The URL is invalid !'})
+
+    # Remove the &list=... part of the URL
+    url = url.split('&')[0]
 
     command = [
         '/usr/local/bin/yt_dlp',
@@ -35,6 +39,8 @@ def download_track():
 
         # Wait for the process to finish
         process.check_returncode()
+        print(process.stdout)
+        print(process.stderr)
 
         if process.returncode == 0:
             # Check if the song has already been downloaded
