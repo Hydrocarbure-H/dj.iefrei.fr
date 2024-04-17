@@ -39,8 +39,6 @@ def download_track():
 
         # Wait for the process to finish
         process.check_returncode()
-        print(process.stdout)
-        print(process.stderr)
 
         if process.returncode == 0:
             # Check if the song has already been downloaded
