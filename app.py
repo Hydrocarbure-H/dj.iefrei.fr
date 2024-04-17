@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 from flask import Flask, request, jsonify, render_template
 import requests
@@ -30,11 +31,28 @@ def convert_short_youtube_url_to_full(url):
 
 @app.route('/')
 def index():
+    """
+    Render the index page.
+    :return:
+    """
     return render_template('index.html')
 
 
 @app.route('/add', methods=['POST'])
 def download_track():
+    """
+    Download a track from a YouTube URL.
+    :return:
+    """
+    current_time = datetime.now()
+    current_hour = current_time.hour
+    current_weekday = current_time.weekday()  # Lundi est 0 et dimanche est 6
+
+    # Vérifiez si nous sommes dans la plage horaire autorisée
+    if not (current_weekday == 4 and current_hour >= 20) and not (current_weekday == 5 and current_hour < 3):
+        return jsonify(
+            {'status': 'failure', 'message': 'Tracks can only be downloaded from Friday 20:00 to Saturday 03:00.'})
+
     url = request.json['url']
     output_template = 'downloads/%(title)s.%(ext)s'
 
@@ -103,12 +121,6 @@ def download_track():
 
         return jsonify({'status': 'failure', 'message': "An error occurred while downloading the track. Maybe the"
                                                         " URL is invalid or the track is not available for download."})
-
-
-def yt_exists(url):
-    the_url = f"https://www.youtube.com/oembed?url={url}&format=json"
-    response = requests.get(the_url)
-    return response.status_code != 404
 
 
 if __name__ == '__main__':
