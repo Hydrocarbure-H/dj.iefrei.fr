@@ -1,8 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const button = document.getElementById('launcher');
+    const message = document.getElementById('message');
+
     button.addEventListener('click', function() {
-        button.innerHTML = "Adding...This may take a while";
+        button.innerHTML = "Adding...";
         button.disabled = true;
+        message.style.backgroundColor = "#ff9800";
+        message.innerHTML = "This may take a few seconds...";
         processing_link();
     });
 });
@@ -64,14 +68,14 @@ function handleResponse(data) {
     }
     else if (data.status === 'warning') {
         message.style.backgroundColor = "#ff9800";
-        message.innerHTML = "Warning: " + data.message;
+        message.innerHTML = data.message;
         button.innerHTML = "Add another track !";
         button.disabled = false;
 
     }
     else {
         message.style.backgroundColor = "#f44336";
-        message.innerHTML = "Error: " + data.message;
+        message.innerHTML = data.message;
         button.innerHTML = "Try again";
         button.disabled = false;
     }
