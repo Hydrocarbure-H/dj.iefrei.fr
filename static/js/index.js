@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Button clicked 1");
         button.innerHTML = "Adding...";
         button.disabled = true;
-        message.style.backgroundColor = "#ff9800";
+        message.style.backgroundColor = "#444343";
         message.innerHTML = "This may take a few seconds...";
         processing_link(true);
     });
