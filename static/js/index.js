@@ -3,18 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const message = document.getElementById('message');
 
     button.addEventListener('click', function() {
+        console.log("Button clicked 1");
         button.innerHTML = "Adding...";
         button.disabled = true;
         message.style.backgroundColor = "#ff9800";
         message.innerHTML = "This may take a few seconds...";
-        processing_link();
+        processing_link(true);
     });
 });
 
 /**
  * Process the link entered by the user
  */
-function processing_link() {
+function processing_link(execute=false) {
     const url = document.getElementById('url').value;
     const message = document.getElementById('message');
     const button = document.getElementById('launcher');
@@ -24,23 +25,24 @@ function processing_link() {
         message.style.backgroundColor = "#f44336";
         return;
     }
-    
-    $.ajax({
-        url: '/add',
-        type: 'POST',
-        data: JSON.stringify({ url: url }),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: function(data) {
-            handleResponse(data);
-        },
-        error: function(xhr, status, error) {
-            message.innerHTML = `Error: ${error}`;
-            message.style.backgroundColor = "#f44336";
-            button.innerHTML = "Try again";
-            button.disabled = false;
-        }
-    });
+    if (execute) {
+        $.ajax({
+            url: '/add',
+            type: 'POST',
+            data: JSON.stringify({url: url}),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+                handleResponse(data);
+            },
+            error: function (xhr, status, error) {
+                message.innerHTML = `Error: ${error}`;
+                message.style.backgroundColor = "#f44336";
+                button.innerHTML = "Try again";
+                button.disabled = false;
+            }
+        });
+    }
 }
 
 /**
