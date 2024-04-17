@@ -19,11 +19,11 @@ def convert_short_youtube_url_to_full(url):
     """
 
     # Check if the URL is a valid shortened YouTube URL
-    match = re.match(r'(http(s)?:\/\/)?((w){3}.)??youtu(be|.be)?(\.com)?/([a-zA-Z0-9_-]+)', url)
+    match = re.match(r'(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?/([a-zA-Z0-9_-]+)', url)
     if not match:
         raise ValueError("Invalid YouTube URL provided.")
 
-    video_id = match.group(1)
+    video_id = match.group(7)
     full_url = f'https://www.youtube.com/watch?v={video_id}'
     return full_url
 
